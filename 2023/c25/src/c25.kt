@@ -1,5 +1,4 @@
 import java.io.File
-import kotlin.random.Random
 
 data class Wire(val from: Component, val to: Component)
 data class Component(val name: String) : Comparable<Component> {
@@ -46,39 +45,38 @@ class Graph(private val components: Set<Component>, private val wires: Set<Wire>
     }
 
     private fun union(c1: Component, c2: Component) {
-        val r1 = find(c1)
-        val r2 = find(c2)
-        if (r1 == r2) return
-        if (ranks[r1]!! > ranks[r2]!!) parents[r2] = r1
+        val root1 = find(c1)
+        val root2 = find(c2)
+        if (root1 == root2) return
+        if (ranks[root1]!! > ranks[root2]!!) parents[root2] = root1
         else {
-            parents[r1] = r2
-            if (ranks[r1] == ranks[r2]) ranks[r2] = ranks[r2]!! + 1
+            parents[root1] = root2
+            if (ranks[root1] == ranks[root2]) ranks[root2] = ranks[root2]!! + 1
         }
     }
 
     fun kargerMinCut(): Int {
-        val random = Random.Default
         val openWires = wires.toMutableList()
 
-        var v = components.size
-        while (v > 2) {
-            val randomIndex = random.nextInt(openWires.size)
-            val c1 = openWires[randomIndex].from
-            val c2 = openWires[randomIndex].to
-            val setU = find(c1)
-            val setW = find(c2)
-            if (setU != setW) {
-                v--
-                union(setU, setW)
+        var groups = components.size
+        while (groups > 2) {
+            val wire = openWires.random()
+            openWires.remove(wire)
+
+            val group1 = find(wire.from)
+            val group2 = find(wire.to)
+
+            if (group1 != group2) {
+                groups--
+                union(group1, group2)
             }
-            openWires.removeAt(randomIndex)
         }
 
         var minCut = 0
         for (wire in openWires) {
-            val setU = find(wire.from)
-            val setW = find(wire.to)
-            if (setU != setW) minCut++
+            val group1 = find(wire.from)
+            val group2 = find(wire.to)
+            if (group1 != group2) minCut++
         }
         return minCut
     }
