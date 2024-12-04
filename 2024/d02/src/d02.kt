@@ -55,6 +55,9 @@ fun main() {
     val lines = Report.getLines("inputs/d02.txt")
     val reports = Report.getReports(lines)
 
+    // part 1
     println(reports.count { it.isSafe1 })
+
+    // part 2
     println(reports.count { it.isSafe2 })
 }
