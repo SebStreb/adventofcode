@@ -18,7 +18,7 @@ data class Trail(val path: MutableList<Position>) {
 class TopographicalMap(private val heights: List<List<Int>>) {
     private val size = heights.size
 
-    val heads = mutableListOf<Position>()
+    private val heads = mutableListOf<Position>()
     private val trails = mutableListOf<Trail>()
 
     fun findTrailHeads() {
@@ -32,8 +32,12 @@ class TopographicalMap(private val heights: List<List<Int>>) {
         }
     }
 
-    fun score1(head: Position) = trails.filter { it.path.first() == head && it.complete }.map { it.path.last() }.toSet().size
-    fun score2(head: Position) = trails.count { it.path.first() == head && it.complete }
+    private fun score1(head: Position) =
+        trails.filter { it.path.first() == head && it.complete }.map { it.path.last() }.toSet().size
+    fun totalScore1() = heads.sumOf { score1(it) }
+
+    private fun score2(head: Position) = trails.count { it.path.first() == head && it.complete }
+    fun totalScore2() = heads.sumOf { score2(it) }
 
     fun walkAllTrails() {
         var index = 0
@@ -72,8 +76,8 @@ fun main() {
     map.walkAllTrails()
 
     // part 1
-    println(map.heads.sumOf { map.score1(it) })
+    println(map.totalScore1())
 
     // part 2
-    println(map.heads.sumOf { map.score2(it) })
+    println(map.totalScore2())
 }
