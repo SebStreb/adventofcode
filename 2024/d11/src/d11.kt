@@ -66,7 +66,7 @@ class BlinkingStones2(private var stones: MutableMap<Long, Long>) {
 }
 
 fun main() {
-    val file = File("inputs/test.txt")
+    val file = File("inputs/d11.txt")
     val lines = file.readLines()
 
     // part 1
