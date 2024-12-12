@@ -26,9 +26,9 @@ data class Region(val plant: Char, val points: MutableSet<Point>) {
             val bottom = Point(point.x, point.y + 1) in points
             val bottomRight = Point(point.x + 1, point.y + 1) in points
 
-            if (!left && !top && !right && !bottom) { // no neighbor: 4 corners
+            if (!left && !top && !right && !bottom) { // no neighbor: 4 outside corners
                 corners += 4
-            } else if (left && !right && !top && !bottom) { // one neighbor: 2 corners
+            } else if (left && !right && !top && !bottom) { // one neighbor: 2 outside corners
                 corners += 2
             } else if (!left && top && !right && !bottom) {
                 corners += 2
@@ -36,7 +36,7 @@ data class Region(val plant: Char, val points: MutableSet<Point>) {
                 corners += 2
             } else if (!left && !top && !right && bottom) {
                 corners += 2
-            } else if (left && top && !right && !bottom) { // two neighbors: 0 corner if opposite, 1 outside corner + 1 possible inside corner
+            } else if (left && top && !right && !bottom) { // two neighbors: if opposite, 0 corners; otherwise, 1 outside corner + 1 possible inside corner
                 corners += 1
                 if (!topLeft) corners += 1
             } else if (left && !top && right && !bottom) {
