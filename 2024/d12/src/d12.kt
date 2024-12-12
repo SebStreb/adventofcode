@@ -107,7 +107,6 @@ data class Garden(private val plants: List<List<Char>>) {
                 }
                 regions.add(Region(plant, connected))
             }
-
         }
     }
 
