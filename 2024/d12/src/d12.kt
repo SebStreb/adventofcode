@@ -71,7 +71,7 @@ data class Region(val plant: Char, val points: MutableSet<Point>) {
                 if (!bottomRight) corners += 1
             }
         }
-        return corners
+        return corners // number of sides equals number of corners
     }
 }
 
