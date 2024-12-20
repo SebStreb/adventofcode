@@ -117,9 +117,9 @@ fun main() {
     val test = false
     val file = File(if (test) "inputs/test.txt" else "inputs/d20.txt")
     val lines = file.readLines()
+    val raceMap = RaceMap.parse(lines)
 
     // part 1
-    val raceMap = RaceMap.parse(lines)
     println(raceMap.part1(test))
 
     // part 2
